@@ -1,0 +1,33 @@
+CREATE TABLE IF NOT EXISTS NoteEntity (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    content TEXT NOT NULL,
+    created_at INTEGER NOT NULL,
+    updated_at INTEGER NOT NULL
+);
+
+selectAll:
+SELECT * FROM NoteEntity ORDER BY updated_at DESC;
+
+selectById:
+SELECT * FROM NoteEntity WHERE id = ?;
+
+search:
+SELECT * FROM NoteEntity
+WHERE title LIKE '%' || ? || '%' OR content LIKE '%' || ? || '%'
+ORDER BY updated_at DESC;
+
+insert:
+INSERT INTO NoteEntity(title, content, created_at, updated_at)
+VALUES (?, ?, ?, ?);
+
+update:
+UPDATE NoteEntity
+SET title = ?, content = ?, updated_at = ?
+WHERE id = ?;
+
+deleteById:
+DELETE FROM NoteEntity WHERE id = ?;
+
+lastInsertRowId:
+SELECT last_insert_rowid();
